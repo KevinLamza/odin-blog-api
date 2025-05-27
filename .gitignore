@@ -1,6 +1,9 @@
 # Notes
 *.md
 
+# Prisma
+*/generated/prisma
+
 # Logs
 logs
 *.log
