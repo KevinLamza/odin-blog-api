@@ -9,4 +9,3 @@ routes.get('/', (req, res) => {
 });
 
 routes.use('/posts', posts);
-routes.use('/comments', comments);
