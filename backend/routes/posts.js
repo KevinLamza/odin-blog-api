@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/', (req, res) => {
 	res.send('GET all posts');
+	// res.send({ data: 'hello' });
 });
 
 router.post('/', (req, res) => {

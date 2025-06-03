@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>My First Webpage</title>
+	</head>
+
+	<body>
+		<h1>hello</h1>
+	</body>
+	<script>
+		fetch('http://localhost:3000', { mode: 'cors' })
+			.then(function (response) {
+				return response.json();
+			})
+			.then(function (response) {
+				console.log(response);
+			});
+	</script>
+</html>
