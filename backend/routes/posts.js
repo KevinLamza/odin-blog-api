@@ -4,7 +4,7 @@ import comments from './comments.js';
 const router = Router();
 
 router.get('/', (req, res) => {
-	res.send('GET all posts');
+	res.json({ message: 'GET all posts' });
 	// res.send({ data: 'hello' });
 });
 

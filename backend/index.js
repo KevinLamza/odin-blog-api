@@ -1,5 +1,6 @@
 import { configDotenv } from 'dotenv';
-import express from 'express';
+import express, { application, urlencoded } from 'express';
+import passport from 'passport';
 import cors from 'cors';
 import { routes } from './routes/routes.js';
 
@@ -8,6 +9,9 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 // MAIN ROUTE
+app.use(passport.initialize());
+app.use(express.json());
+app.use(urlencoded({ extended: true }));
 app.use(cors());
 app.use('/', routes);
 
