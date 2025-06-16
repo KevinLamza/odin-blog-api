@@ -9,7 +9,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	res.send('POST new post');
+	console.log('received post request');
+	console.log(req.body);
+	res.json('POST new post');
 });
 
 router.get('/:postId', (req, res) => {
