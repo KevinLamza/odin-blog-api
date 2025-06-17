@@ -19,3 +19,21 @@ export const findUser = async (username) => {
 		},
 	});
 };
+
+export const getPostTitles = async (authorId) => {
+	return await prisma.post.findMany({
+		where: { AuthorId: authorId },
+		select: { id: true, title: true },
+	});
+};
+
+export const addPost = async (title, isPublished, content, authorId) => {
+	return await prisma.post.create({
+		data: {
+			title: title,
+			isPublished: isPublished === 'true',
+			content: content,
+			AuthorId: authorId,
+		},
+	});
+};

@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import Authentification from './Authentification.jsx';
 import { LoginForm } from './LoginForm.jsx';
 import { Logout } from './Logout.jsx';
@@ -8,7 +9,7 @@ import ErrorPage from './ErrorPage';
 const routes = [
 	{
 		path: '/',
-		element: <Authentification />,
+		element: <Navigate replace to="/dashboard" />,
 		errorElement: <ErrorPage />,
 	},
 	{
@@ -24,12 +25,12 @@ const routes = [
 		element: <Dashboard />,
 	},
 	{
-		path: 'createPost',
+		path: '/createPost',
 		element: <CreatePost />,
 	},
 	{
 		path: '*',
-		element: <Authentification />,
+		element: <Navigate replace to="/dashboard" />,
 	},
 ];
 

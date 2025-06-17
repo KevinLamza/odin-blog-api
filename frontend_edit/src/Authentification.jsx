@@ -1,4 +1,5 @@
 import useAuthentification from './useAuthentification.jsx';
+import { Navigate } from 'react-router-dom';
 
 function Authentification() {
 	const { error, loading } = useAuthentification();

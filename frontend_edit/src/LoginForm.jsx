@@ -32,6 +32,7 @@ const LoginForm = () => {
 		const expires = moment().add(responseObject.expiresIn);
 		localStorage.setItem('token', responseObject.token);
 		localStorage.setItem('expires', JSON.stringify(expires.valueOf()));
+		localStorage.setItem('user', responseObject.user.id);
 	}
 	return (
 		<>

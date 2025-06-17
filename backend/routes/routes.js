@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import posts from './posts.js';
 import comments from './comments.js';
+import titles from './titles.js';
 import login from './login.js';
 import adminLogin from './adminLogin.js';
 import register from './register.js';
@@ -39,3 +40,4 @@ routes.get(
 		});
 	}
 );
+routes.use('/titles', titles);

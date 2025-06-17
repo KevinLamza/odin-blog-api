@@ -3,24 +3,6 @@ import * as queryController from '../controllers/queryController.js';
 import * as authentificationController from '../controllers/authentificationController.js';
 
 export const postCreateUser = async (req, res, next) => {
-	// let errors = validationResult(req);
-	// const checkUser = await queryController.findUser(req.body.username);
-	// errors = errors.array();
-	// if (checkUser && checkUser.name === req.body.username) {
-	// 	errors.push({
-	// 		type: 'field',
-	// 		value: req.body.username,
-	// 		msg: 'A user with this name exists already',
-	// 		path: 'username',
-	// 		location: 'body',
-	// 	});
-	// }
-	// if (errors.length !== 0) {
-	// 	return res.status(400).render('sign-up-form', {
-	// 		title: 'sign-up',
-	// 		errors: errors,
-	// 	});
-	// }
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10);
 		const user = await queryController.insertUser(
@@ -46,18 +28,14 @@ export const postLoginUser = async (req, res, next) => {
 		const user = await queryController.findUser(req.body.username);
 
 		if (!user) {
-			// return done(null, false, { message: 'Incorrect username' });
 			res.status(401).json({
 				success: false,
 				message: 'Could not find user',
 			});
 			return;
 		}
-		console.log(req.body.password);
-		console.log(user);
 		const match = await bcrypt.compare(req.body.password, user.password);
 		if (!match) {
-			// return done(null, false, { message: 'Incorrect password' });
 			res.status(401).json({
 				success: false,
 				message: 'Wrong password',
@@ -65,7 +43,6 @@ export const postLoginUser = async (req, res, next) => {
 			return;
 		}
 		const jwt = authentificationController.issueJWT(user);
-		// return done(null, user);
 		res.status(200).json({
 			success: true,
 			user: user,
@@ -82,18 +59,14 @@ export const postLoginAdmin = async (req, res, next) => {
 		const user = await queryController.findUser(req.body.username);
 
 		if (!user || user.name != 'kevin') {
-			// return done(null, false, { message: 'Incorrect username' });
 			res.status(401).json({
 				success: false,
 				message: 'Wrong username',
 			});
 			return;
 		}
-		console.log(req.body.password);
-		console.log(user);
 		const match = await bcrypt.compare(req.body.password, user.password);
 		if (!match) {
-			// return done(null, false, { message: 'Incorrect password' });
 			res.status(401).json({
 				success: false,
 				message: 'Wrong password',
@@ -101,13 +74,36 @@ export const postLoginAdmin = async (req, res, next) => {
 			return;
 		}
 		const jwt = authentificationController.issueJWT(user);
-		// return done(null, user);
 		res.status(200).json({
 			success: true,
 			user: user,
 			token: jwt.token,
 			expiresIn: jwt.expiresIn,
 		});
+	} catch (err) {
+		return next(err);
+	}
+};
+
+export const getPostTitles = async (req, res, next) => {
+	try {
+		const posts = await queryController.getPostTitles(req.headers.userId);
+		res.status(200).json({ success: true, posts: posts });
+		return;
+	} catch (err) {
+		return next(err);
+	}
+};
+
+export const addPost = async (req, res, next) => {
+	try {
+		const post = await queryController.addPost(
+			req.body.title,
+			req.body.isPublished,
+			req.body.content,
+			req.body.AuthorId
+		);
+		res.status(200).json({ success: true });
 	} catch (err) {
 		return next(err);
 	}

@@ -1,18 +1,14 @@
 import { Router } from 'express';
 import comments from './comments.js';
+import * as routeController from '../controllers/routeController.js';
 
 const router = Router();
 
 router.get('/', (req, res) => {
 	res.json({ message: 'GET all posts' });
-	// res.send({ data: 'hello' });
 });
 
-router.post('/', (req, res) => {
-	console.log('received post request');
-	console.log(req.body);
-	res.json('POST new post');
-});
+router.post('/', routeController.addPost);
 
 router.get('/:postId', (req, res) => {
 	res.send(`GET post with ID ${req.params.postId}`);

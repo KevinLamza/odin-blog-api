@@ -5,10 +5,6 @@ const useAuthentification = () => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const navigate = useNavigate();
-	// function logOut() {
-	// 	localStorage.clear();
-	// 	// navigate('/');
-	// }
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
@@ -31,7 +27,7 @@ const useAuthentification = () => {
 				})
 				.then((response) => {
 					if (response.success == true) {
-						navigate('/dashboard');
+						return;
 					}
 				})
 				.catch((error) => setError(error))
