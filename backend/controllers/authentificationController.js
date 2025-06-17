@@ -22,6 +22,8 @@ passport.use(
 				where: { id: jwt_payload.sub },
 			});
 			if (user) {
+				console.log('hello');
+				console.log(user);
 				return done(null, user);
 			} else {
 				return done(null, false);
@@ -34,7 +36,7 @@ passport.use(
 
 export const issueJWT = (user) => {
 	const id = user.id;
-	const expiresIn = '1m';
+	const expiresIn = '1d';
 	const payload = {
 		sub: id,
 		iat: Math.floor(Date.now() / 1000),

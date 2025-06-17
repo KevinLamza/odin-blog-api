@@ -1,7 +1,9 @@
 import moment from 'moment';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const LoginForm = () => {
+	const navigate = useNavigate();
 	const [formData, setFormData] = useState({ username: '', password: '' });
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -12,8 +14,7 @@ const Login = () => {
 	};
 	async function handleSubmit(e) {
 		e.preventDefault();
-		console.log(formData);
-		const response = await fetch('http://localhost:3000/login', {
+		const response = await fetch('http://localhost:3000/adminLogin', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -24,8 +25,8 @@ const Login = () => {
 			}),
 		});
 		const responseObject = await response.json();
-		console.log(responseObject);
 		setLocalStorage(responseObject);
+		navigate('/');
 	}
 	async function setLocalStorage(responseObject) {
 		const expires = moment().add(responseObject.expiresIn);
@@ -37,7 +38,7 @@ const Login = () => {
 			<h1>Please login</h1>
 			<form onSubmit={handleSubmit}>
 				<p>
-					<label for="username">Username:</label>
+					<label htmlFor="username">Username:</label>
 					<br></br>
 					<input
 						type="text"
@@ -48,7 +49,7 @@ const Login = () => {
 					/>
 				</p>
 				<p>
-					<label for="password">Password:</label>
+					<label htmlFor="password">Password:</label>
 					<br></br>
 					<input
 						type="password"
@@ -64,4 +65,4 @@ const Login = () => {
 	);
 };
 
-export { Login };
+export { LoginForm };

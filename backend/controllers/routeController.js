@@ -51,6 +51,7 @@ export const postLoginUser = async (req, res, next) => {
 				success: false,
 				message: 'Could not find user',
 			});
+			return;
 		}
 		console.log(req.body.password);
 		console.log(user);
@@ -61,6 +62,43 @@ export const postLoginUser = async (req, res, next) => {
 				success: false,
 				message: 'Wrong password',
 			});
+			return;
+		}
+		const jwt = authentificationController.issueJWT(user);
+		// return done(null, user);
+		res.status(200).json({
+			success: true,
+			user: user,
+			token: jwt.token,
+			expiresIn: jwt.expiresIn,
+		});
+	} catch (err) {
+		return next(err);
+	}
+};
+
+export const postLoginAdmin = async (req, res, next) => {
+	try {
+		const user = await queryController.findUser(req.body.username);
+
+		if (!user || user.name != 'kevin') {
+			// return done(null, false, { message: 'Incorrect username' });
+			res.status(401).json({
+				success: false,
+				message: 'Wrong username',
+			});
+			return;
+		}
+		console.log(req.body.password);
+		console.log(user);
+		const match = await bcrypt.compare(req.body.password, user.password);
+		if (!match) {
+			// return done(null, false, { message: 'Incorrect password' });
+			res.status(401).json({
+				success: false,
+				message: 'Wrong password',
+			});
+			return;
 		}
 		const jwt = authentificationController.issueJWT(user);
 		// return done(null, user);
